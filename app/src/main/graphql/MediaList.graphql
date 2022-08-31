@@ -1,0 +1,17 @@
+query MediaList{
+    Page {
+        media {
+            id
+            siteUrl
+            title {
+                english
+                native
+            }
+            description
+            bannerImage
+            coverImage {
+                large
+            }
+        }
+    }
+}
