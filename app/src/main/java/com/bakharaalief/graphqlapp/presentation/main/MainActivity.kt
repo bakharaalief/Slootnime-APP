@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
 import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
+import com.bumptech.glide.Glide
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +24,13 @@ class MainActivity : AppCompatActivity() {
         setUpViewModel()
         setUpRv()
         getData()
+
+        Glide
+            .with(this)
+            .load("https://rickandmortyapi.com/api/character/avatar/2.jpeg")
+            .centerCrop()
+            .placeholder(R.drawable.ic_launcher_background)
+            .into(binding.characterDetailImage)
     }
 
     private fun setUpRv() {

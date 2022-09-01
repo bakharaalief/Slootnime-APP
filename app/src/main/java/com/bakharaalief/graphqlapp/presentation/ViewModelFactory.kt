@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bakharaalief.graphqlapp.data.CharacterRepository
 import com.bakharaalief.graphqlapp.di.Injection
+import com.bakharaalief.graphqlapp.presentation.characterDetail.CharacterDetailViewModel
 import com.bakharaalief.graphqlapp.presentation.main.MainViewModel
 
 class ViewModelFactory(
@@ -13,7 +14,12 @@ class ViewModelFactory(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(characterRepository) as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(
+                characterRepository
+            ) as T
+            modelClass.isAssignableFrom(CharacterDetailViewModel::class.java) -> CharacterDetailViewModel(
+                characterRepository
+            ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
