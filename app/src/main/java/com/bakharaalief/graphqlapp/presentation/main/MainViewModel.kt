@@ -1,4 +1,4 @@
-package com.bakharaalief.graphqlapp
+package com.bakharaalief.graphqlapp.presentation.main
 
 import androidx.lifecycle.ViewModel
 import com.bakharaalief.graphqlapp.data.MediaRepository

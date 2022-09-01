@@ -1,4 +1,4 @@
-package com.bakharaalief.graphqlapp
+package com.bakharaalief.graphqlapp.di
 
 import com.bakharaalief.graphqlapp.data.MediaRepository
 import com.bakharaalief.graphqlapp.data.ApolloInstance

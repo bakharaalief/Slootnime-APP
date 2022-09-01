@@ -1,13 +1,11 @@
-package com.bakharaalief.graphqlapp
+package com.bakharaalief.graphqlapp.presentation.main
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.bakharaalief.MediaListAdapter
+import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
 import com.bakharaalief.graphqlapp.data.Resource
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
 
