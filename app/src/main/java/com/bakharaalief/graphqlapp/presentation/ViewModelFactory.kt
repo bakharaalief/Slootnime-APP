@@ -1,8 +1,10 @@
-package com.bakharaalief.graphqlapp
+package com.bakharaalief.graphqlapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bakharaalief.graphqlapp.data.MediaRepository
+import com.bakharaalief.graphqlapp.di.Injection
+import com.bakharaalief.graphqlapp.presentation.main.MainViewModel
 
 class ViewModelFactory(
     private val mediaRepository: MediaRepository,

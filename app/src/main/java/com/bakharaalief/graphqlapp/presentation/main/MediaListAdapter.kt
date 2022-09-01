@@ -1,4 +1,4 @@
-package com.bakharaalief
+package com.bakharaalief.graphqlapp.presentation.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
