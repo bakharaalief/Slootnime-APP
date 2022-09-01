@@ -1,4 +1,4 @@
-package com.bakharaalief.graphqlapp.data
+package com.bakharaalief.graphqlapp.data.network
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.network.okHttpClient

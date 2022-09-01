@@ -1,19 +1,17 @@
 package com.bakharaalief.graphqlapp.presentation.main
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
-import com.bakharaalief.graphqlapp.data.Resource
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
+import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var adapter: MediaListAdapter
+    private lateinit var adapter: CharactersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +25,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRv() {
-        adapter = MediaListAdapter()
-        binding.mediaRv.adapter = adapter
-        binding.mediaRv.layoutManager = GridLayoutManager(this, 2)
+        adapter = CharactersAdapter()
+        val footerAdapter = LoadingStateAdapter {
+            adapter.retry()
+        }
+
+        binding.mediaRv.adapter = adapter.withLoadStateFooter(
+            footer = footerAdapter
+        )
+
+        val gridLayoutManager = GridLayoutManager(this, 2)
+
+        //make grid from 2 to 1 when offline or no network
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == adapter.itemCount && footerAdapter.itemCount > 0) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
+        binding.mediaRv.layoutManager = gridLayoutManager
     }
 
     private fun setUpViewModel() {
@@ -38,19 +55,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        mainViewModel.getMedia().observe(this) { response ->
-            when (response) {
-                is Resource.Loading -> {
-                    binding.loadingIndicator.visibility = View.VISIBLE
-                }
-                is Resource.Success -> {
-                    binding.loadingIndicator.visibility = View.GONE
-                    adapter.submitList(response.data)
-                }
-                is Resource.Error -> {
-                    binding.loadingIndicator.visibility = View.GONE
-                }
-            }
+        mainViewModel.getCharacters().observe(this) {
+            adapter.submitData(lifecycle, it)
         }
     }
 }
