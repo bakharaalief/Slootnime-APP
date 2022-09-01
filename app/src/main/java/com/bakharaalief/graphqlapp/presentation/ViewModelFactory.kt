@@ -2,18 +2,18 @@ package com.bakharaalief.graphqlapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bakharaalief.graphqlapp.data.MediaRepository
+import com.bakharaalief.graphqlapp.data.CharacterRepository
 import com.bakharaalief.graphqlapp.di.Injection
 import com.bakharaalief.graphqlapp.presentation.main.MainViewModel
 
 class ViewModelFactory(
-    private val mediaRepository: MediaRepository,
+    private val characterRepository: CharacterRepository,
 ) :
     ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(mediaRepository) as T
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(characterRepository) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

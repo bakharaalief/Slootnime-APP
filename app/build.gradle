@@ -58,6 +58,9 @@ dependencies {
     //coroutine
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.1'
 
+    //paging
+    implementation "androidx.paging:paging-runtime:3.1.0"
+
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
