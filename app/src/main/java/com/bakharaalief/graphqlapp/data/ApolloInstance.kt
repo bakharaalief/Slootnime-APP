@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 object ApolloInstance {
 
-    private const val BASE_URL = "https://graphql.anilist.co"
+    private const val BASE_URL = "https://rickandmortyapi.com/graphql"
 
     private val loggingInterceptor = if (BuildConfig.DEBUG) {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

@@ -5,24 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bakharaalief.app.MediaListQuery
+import com.bakharaalief.app.CharactersQuery
 import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.databinding.ItemMediaBinding
 import com.bumptech.glide.Glide
 
-class MediaListAdapter : ListAdapter<MediaListQuery.Medium, MediaListAdapter.MyViewHolder>(
+class MediaListAdapter : ListAdapter<CharactersQuery.Result, MediaListAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
 
     class MyViewHolder(private val itemMediaBinding: ItemMediaBinding) :
         RecyclerView.ViewHolder(itemMediaBinding.root) {
 
-        fun bind(mediaListQuery: MediaListQuery.Medium) {
-            itemMediaBinding.mediaItemEnglishTitle.text = mediaListQuery.title?.english ?: "kosong"
+        fun bind(charactersQuery: CharactersQuery.Result) {
+            itemMediaBinding.mediaItemEnglishTitle.text = charactersQuery.name ?: "kosong"
 
             Glide
                 .with(itemView.context)
-                .load(mediaListQuery.coverImage?.large)
+                .load(charactersQuery.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(itemMediaBinding.mediaItemCover)
@@ -41,17 +41,17 @@ class MediaListAdapter : ListAdapter<MediaListQuery.Medium, MediaListAdapter.MyV
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MediaListQuery.Medium>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CharactersQuery.Result>() {
             override fun areItemsTheSame(
-                oldItem: MediaListQuery.Medium,
-                newItem: MediaListQuery.Medium
+                oldItem: CharactersQuery.Result,
+                newItem: CharactersQuery.Result
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: MediaListQuery.Medium,
-                newItem: MediaListQuery.Medium
+                oldItem: CharactersQuery.Result,
+                newItem: CharactersQuery.Result
             ): Boolean {
                 return oldItem == newItem
             }
