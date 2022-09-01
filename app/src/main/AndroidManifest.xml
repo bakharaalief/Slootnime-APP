@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bakharaalief.graphqlapp">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GraphqlApp">
+        <activity
+            android:name=".presentation.characterDetail.CharacterDetailActivity"
+            android:exported="false"
+            android:parentActivityName=".presentation.main.MainActivity"/>
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true">
