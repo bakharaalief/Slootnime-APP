@@ -1,13 +1,15 @@
 package com.bakharaalief.graphqlapp.presentation.main
 
+import android.app.ActivityOptions
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
 import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
-import com.bumptech.glide.Glide
+import com.bakharaalief.graphqlapp.presentation.characterDetail.CharacterDetailActivity
+import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,19 +24,25 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpViewModel()
+        setUpAnimation()
         setUpRv()
         getData()
-
-        Glide
-            .with(this)
-            .load("https://rickandmortyapi.com/api/character/avatar/2.jpeg")
-            .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(binding.characterDetailImage)
     }
 
     private fun setUpRv() {
-        adapter = CharactersAdapter()
+        adapter = CharactersAdapter { id, name, image ->
+            val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+            val detailIntent = Intent(this, CharacterDetailActivity::class.java)
+            detailIntent.putExtra(CharacterDetailActivity.CHARACTER_ID, id)
+            detailIntent.putExtra(CharacterDetailActivity.CHARACTER_NAME, name)
+            detailIntent.putExtra(
+                CharacterDetailActivity.CHARACTER_IMAGE,
+                image
+            )
+            startActivity(detailIntent, bundle)
+        }
+
+
         val footerAdapter = LoadingStateAdapter {
             adapter.retry()
         }
@@ -61,6 +69,14 @@ class MainActivity : AppCompatActivity() {
     private fun setUpViewModel() {
         val factory = ViewModelFactory.getInstance()
         mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+    }
+
+    private fun setUpAnimation() {
+        val exit = MaterialSharedAxis(MaterialSharedAxis.X, true).apply {
+            excludeTarget(android.R.id.statusBarBackground, true)
+            excludeTarget(android.R.id.navigationBarBackground, true)
+        }
+        window.exitTransition = exit
     }
 
     private fun getData() {
