@@ -1,6 +1,7 @@
 package com.bakharaalief.graphqlapp.presentation.characterDetail
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -16,19 +17,15 @@ class CharacterDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCharacterDetailBinding
     private lateinit var characterDetailViewModel: CharacterDetailViewModel
 
-    private var id: String = ""
-    private var name: String = ""
-    private var image: String = ""
+    private val id: String by lazy { intent.getStringExtra(CHARACTER_ID) ?: "" }
+    private val name: String by lazy { intent.getStringExtra(CHARACTER_NAME) ?: "" }
+    private val image: String by lazy { intent.getStringExtra(CHARACTER_IMAGE) ?: "" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCharacterDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        id = intent.getStringExtra(CHARACTER_ID) as String
-        name = intent.getStringExtra(CHARACTER_NAME) as String
-        image = intent.getStringExtra(CHARACTER_IMAGE) as String
 
         setUpActionBar()
         setUpAnimation()
@@ -40,6 +37,16 @@ class CharacterDetailActivity : AppCompatActivity() {
     private fun setUpActionBar() {
         supportActionBar?.title = name
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> true
+        }
     }
 
     private fun setUpAnimation() {

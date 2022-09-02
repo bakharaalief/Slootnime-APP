@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var adapter: CharactersAdapter
 
+    private val spanCount: Int by lazy { 2 }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,16 +34,13 @@ class MainActivity : AppCompatActivity() {
     private fun setUpRv() {
         adapter = CharactersAdapter { id, name, image ->
             val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-            val detailIntent = Intent(this, CharacterDetailActivity::class.java)
-            detailIntent.putExtra(CharacterDetailActivity.CHARACTER_ID, id)
-            detailIntent.putExtra(CharacterDetailActivity.CHARACTER_NAME, name)
-            detailIntent.putExtra(
-                CharacterDetailActivity.CHARACTER_IMAGE,
-                image
-            )
+            val detailIntent = Intent(this, CharacterDetailActivity::class.java).apply {
+                putExtra(CharacterDetailActivity.CHARACTER_ID, id)
+                putExtra(CharacterDetailActivity.CHARACTER_NAME, name)
+                putExtra(CharacterDetailActivity.CHARACTER_IMAGE, image)
+            }
             startActivity(detailIntent, bundle)
         }
-
 
         val footerAdapter = LoadingStateAdapter {
             adapter.retry()
@@ -51,13 +50,13 @@ class MainActivity : AppCompatActivity() {
             footer = footerAdapter
         )
 
-        val gridLayoutManager = GridLayoutManager(this, 2)
+        val gridLayoutManager = GridLayoutManager(this, spanCount)
 
         //make grid from 2 to 1 when offline or no network
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (position == adapter.itemCount && footerAdapter.itemCount > 0) {
-                    2
+                    spanCount
                 } else {
                     1
                 }

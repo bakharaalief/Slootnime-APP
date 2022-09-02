@@ -13,8 +13,7 @@
         android:theme="@style/Theme.GraphqlApp">
         <activity
             android:name=".presentation.characterDetail.CharacterDetailActivity"
-            android:exported="false"
-            android:parentActivityName=".presentation.main.MainActivity"/>
+            android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true">
