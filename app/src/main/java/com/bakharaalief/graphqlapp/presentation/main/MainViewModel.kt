@@ -3,9 +3,9 @@ package com.bakharaalief.graphqlapp.presentation.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.bakharaalief.graphqlapp.data.CharacterRepository
+import com.bakharaalief.graphqlapp.domain.usecase.CharacterUseCase
 
-class MainViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
+class MainViewModel(private val characterUseCase: CharacterUseCase) : ViewModel() {
 
-    fun getCharacters() = characterRepository.getCharacters().cachedIn(viewModelScope)
+    fun getCharacters() = characterUseCase.getCharacters().cachedIn(viewModelScope)
 }

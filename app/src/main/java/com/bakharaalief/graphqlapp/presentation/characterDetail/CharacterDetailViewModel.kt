@@ -1,9 +1,9 @@
 package com.bakharaalief.graphqlapp.presentation.characterDetail
 
 import androidx.lifecycle.ViewModel
-import com.bakharaalief.graphqlapp.data.CharacterRepository
+import com.bakharaalief.graphqlapp.domain.usecase.CharacterUseCase
 
-class CharacterDetailViewModel(private val characterRepository: CharacterRepository) : ViewModel() {
+class CharacterDetailViewModel(private val characterUseCase: CharacterUseCase) : ViewModel() {
 
-    fun getCharactersByIds(id: String) = characterRepository.getCharactersByIds(id)
+    fun getCharactersByIds(id: String) = characterUseCase.getCharactersByIds(id)
 }

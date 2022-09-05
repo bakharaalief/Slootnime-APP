@@ -2,23 +2,23 @@ package com.bakharaalief.graphqlapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bakharaalief.graphqlapp.data.CharacterRepository
 import com.bakharaalief.graphqlapp.di.Injection
+import com.bakharaalief.graphqlapp.domain.usecase.CharacterUseCase
 import com.bakharaalief.graphqlapp.presentation.characterDetail.CharacterDetailViewModel
 import com.bakharaalief.graphqlapp.presentation.main.MainViewModel
 
 class ViewModelFactory(
-    private val characterRepository: CharacterRepository,
+    private val characterUseCase: CharacterUseCase,
 ) :
     ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> MainViewModel(
-                characterRepository
+                characterUseCase
             ) as T
             modelClass.isAssignableFrom(CharacterDetailViewModel::class.java) -> CharacterDetailViewModel(
-                characterRepository
+                characterUseCase
             ) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
@@ -31,7 +31,7 @@ class ViewModelFactory(
         fun getInstance(): ViewModelFactory =
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(
-                    Injection.provideRepository(),
+                    Injection.provideCharacterUseCase()
                 )
             }.also { instance = it }
     }
