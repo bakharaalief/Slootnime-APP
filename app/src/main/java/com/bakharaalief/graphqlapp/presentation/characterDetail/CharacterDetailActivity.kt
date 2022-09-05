@@ -82,9 +82,9 @@ class CharacterDetailActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     binding.loadingIndicator.visibility = View.GONE
                     binding.characterDetailInfo.visibility = View.VISIBLE
-                    binding.characterDetailName.text = response.data?.name
-                    binding.characterDetailGender.text = response.data?.gender
-                    binding.characterDetailSpecies.text = response.data?.species
+                    binding.characterDetailName.text = response.data.name
+                    binding.characterDetailGender.text = response.data.gender
+                    binding.characterDetailSpecies.text = response.data.species
                 }
                 is Resource.Error -> {
                     binding.loadingIndicator.visibility = View.GONE

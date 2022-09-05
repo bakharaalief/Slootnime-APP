@@ -3,29 +3,27 @@ package com.bakharaalief.graphqlapp.presentation.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bakharaalief.app.CharactersQuery
 import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.databinding.ItemMediaBinding
+import com.bakharaalief.graphqlapp.domain.model.Character
+import com.bakharaalief.graphqlapp.domain.model.CharacterDiffUtil
 import com.bumptech.glide.Glide
 
 class CharactersAdapter(private val onItemClick: (id: String, name: String, image: String) -> Unit) :
-    PagingDataAdapter<CharactersQuery.Result, CharactersAdapter.MyViewHolder>(
-        DIFF_CALLBACK
-    ) {
+    PagingDataAdapter<Character, CharactersAdapter.MyViewHolder>(CharacterDiffUtil) {
 
     class MyViewHolder(private val itemMediaBinding: ItemMediaBinding) :
         RecyclerView.ViewHolder(itemMediaBinding.root) {
 
         val mediaItemCard = itemMediaBinding.mediaItemCard
 
-        fun bind(charactersQuery: CharactersQuery.Result) {
-            itemMediaBinding.mediaItemEnglishTitle.text = charactersQuery.name
+        fun bind(character: Character) {
+            itemMediaBinding.mediaItemEnglishTitle.text = character.name
 
             Glide
                 .with(itemView.context)
-                .load(charactersQuery.image)
+                .load(character.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(itemMediaBinding.mediaItemCover)
@@ -47,23 +45,5 @@ class CharactersAdapter(private val onItemClick: (id: String, name: String, imag
         val inflater = LayoutInflater.from(parent.context)
         val view = ItemMediaBinding.inflate(inflater, parent, false)
         return MyViewHolder(view)
-    }
-
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CharactersQuery.Result>() {
-            override fun areItemsTheSame(
-                oldItem: CharactersQuery.Result,
-                newItem: CharactersQuery.Result
-            ): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(
-                oldItem: CharactersQuery.Result,
-                newItem: CharactersQuery.Result
-            ): Boolean {
-                return oldItem == newItem
-            }
-        }
     }
 }
