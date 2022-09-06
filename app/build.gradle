@@ -70,6 +70,9 @@ dependencies {
     //dagger hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //Lottie Animation
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }
 
 //Configure the Apollo plugin to specify the package in which the Kotlin files will be generated.
