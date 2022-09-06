@@ -1,0 +1,20 @@
+query ListMedia($page: Int) {
+    Page(page: $page) {
+        pageInfo {
+            total
+            hasNextPage
+        }
+        media {
+            id
+            title {
+                english
+                native
+                romaji
+            }
+            coverImage {
+                large
+            }
+            averageScore
+        }
+    }
+}

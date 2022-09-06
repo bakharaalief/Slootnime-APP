@@ -4,34 +4,35 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
-import com.bakharaalief.app.CharactersQuery
-import com.bakharaalief.graphqlapp.domain.model.Character
-import com.bakharaalief.graphqlapp.util.DataMapper.toCharacterModel
+import com.bakharaalief.app.ListMediaQuery
+import com.bakharaalief.graphqlapp.domain.model.Media
+import com.bakharaalief.graphqlapp.util.DataMapper.toMediaModel
 
 class CharactersPagingSource(private val client: ApolloClient) :
-    PagingSource<Int, Character>() {
+    PagingSource<Int, Media>() {
 
     private val initialPageIndex: Int by lazy { 1 }
 
-    override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Media>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Media> {
         return try {
 
             val position = params.key ?: initialPageIndex
             val responseData =
-                client.query(CharactersQuery(Optional.presentIfNotNull(position))).execute()
-            val characters = responseData.data?.characters
+                client.query(ListMediaQuery(Optional.presentIfNotNull(position))).execute()
+            val listMedia = responseData.data?.Page?.media
+            val pageInfo = responseData.data?.Page?.pageInfo
 
             LoadResult.Page(
-                data = characters?.results?.filterNotNull()?.toCharacterModel() ?: emptyList(),
+                data = listMedia?.filterNotNull()?.toMediaModel() ?: emptyList(),
                 prevKey = if (position == initialPageIndex) null else position - 1,
-                nextKey = characters?.info?.next
+                nextKey = if (pageInfo?.hasNextPage == false) null else position + 1
             )
         } catch (exception: Exception) {
             return LoadResult.Error(exception)

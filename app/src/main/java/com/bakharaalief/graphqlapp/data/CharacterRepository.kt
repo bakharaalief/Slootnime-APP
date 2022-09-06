@@ -7,16 +7,17 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.apollographql.apollo3.ApolloClient
-import com.bakharaalief.app.CharactersByIdsQuery
+import com.apollographql.apollo3.api.Optional
+import com.bakharaalief.app.MediaByIdQuery
 import com.bakharaalief.graphqlapp.data.network.CharactersPagingSource
-import com.bakharaalief.graphqlapp.domain.model.Character
-import com.bakharaalief.graphqlapp.domain.model.CharacterById
+import com.bakharaalief.graphqlapp.domain.model.Media
+import com.bakharaalief.graphqlapp.domain.model.MediaById
 import com.bakharaalief.graphqlapp.domain.repository.ICharacterRepository
-import com.bakharaalief.graphqlapp.util.DataMapper.toCharacterIdModel
+import com.bakharaalief.graphqlapp.util.DataMapper.toMediaByIdModel
 
 class CharacterRepository(private val client: ApolloClient) : ICharacterRepository {
 
-    override fun getCharacters(): LiveData<PagingData<Character>> {
+    override fun getCharacters(): LiveData<PagingData<Media>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10
@@ -27,17 +28,14 @@ class CharacterRepository(private val client: ApolloClient) : ICharacterReposito
         ).liveData
     }
 
-    override fun getCharactersByIds(id: String): LiveData<Resource<CharacterById>> = liveData {
+    override fun getCharactersByIds(id: Int): LiveData<Resource<MediaById>> = liveData {
         emit(Resource.Loading)
 
         try {
-            val array = ArrayList<String>()
-            array.add(id)
-            val response = client.query(CharactersByIdsQuery(array)).execute()
-            val characters = response.data?.charactersByIds?.filterNotNull() ?: emptyList()
-            val character = characters.toCharacterIdModel()[0]
+            val response = client.query(MediaByIdQuery(Optional.presentIfNotNull(id))).execute()
+            val media = response.data?.Page?.media?.filterNotNull()?.get(0)?.toMediaByIdModel()!!
 
-            emit(Resource.Success(character))
+            emit(Resource.Success(media))
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }

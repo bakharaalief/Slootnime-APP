@@ -1,0 +1,28 @@
+query MediaById($mediaId: Int) {
+    Page {
+        media(id: $mediaId) {
+            startDate {
+                year
+                month
+                day
+            }
+            staff {
+                nodes {
+                    name {
+                        full
+                    }
+                    image {
+                        large
+                    }
+                }
+            }
+            bannerImage
+            title {
+                romaji
+                english
+                native
+            }
+            description
+        }
+    }
+}

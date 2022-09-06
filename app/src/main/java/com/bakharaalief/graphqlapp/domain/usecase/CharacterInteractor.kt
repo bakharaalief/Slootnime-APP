@@ -4,13 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.bakharaalief.graphqlapp.data.CharacterRepository
 import com.bakharaalief.graphqlapp.data.Resource
-import com.bakharaalief.graphqlapp.domain.model.Character
-import com.bakharaalief.graphqlapp.domain.model.CharacterById
+import com.bakharaalief.graphqlapp.domain.model.Media
+import com.bakharaalief.graphqlapp.domain.model.MediaById
 
 class CharacterInteractor(private val characterRepository: CharacterRepository) : CharacterUseCase {
-    override fun getCharacters(): LiveData<PagingData<Character>> =
+    override fun getCharacters(): LiveData<PagingData<Media>> =
         characterRepository.getCharacters()
 
-    override fun getCharactersByIds(id: String): LiveData<Resource<CharacterById>> =
-        characterRepository.getCharactersByIds(id)
+    override fun getCharactersByIds(id: Int): LiveData<Resource<MediaById>> = characterRepository.getCharactersByIds(id)
 }
