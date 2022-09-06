@@ -7,10 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
-import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
 import com.bakharaalief.graphqlapp.presentation.characterDetail.MediaDetailActivity
 import com.google.android.material.transition.platform.MaterialSharedAxis
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -65,8 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        val factory = ViewModelFactory.getInstance()
-        mainViewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     private fun setUpAnimation() {

@@ -14,8 +14,11 @@ import com.bakharaalief.graphqlapp.domain.model.Media
 import com.bakharaalief.graphqlapp.domain.model.MediaById
 import com.bakharaalief.graphqlapp.domain.repository.IMediaRepository
 import com.bakharaalief.graphqlapp.util.DataMapper.toMediaByIdModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MediaRepository(private val client: ApolloClient) : IMediaRepository {
+@Singleton
+class MediaRepository @Inject constructor(private val client: ApolloClient) : IMediaRepository {
 
     override fun getListMedia(): LiveData<PagingData<Media>> {
         return Pager(
@@ -39,15 +42,5 @@ class MediaRepository(private val client: ApolloClient) : IMediaRepository {
         } catch (e: Exception) {
             emit(Resource.Error(e.toString()))
         }
-    }
-
-    companion object {
-        @Volatile
-        private var instance: MediaRepository? = null
-
-        fun getInstance(client: ApolloClient): MediaRepository =
-            instance ?: synchronized(this) {
-                instance ?: MediaRepository(client)
-            }.also { instance = it }
     }
 }

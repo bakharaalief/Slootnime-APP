@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("com.apollographql.apollo3").version("3.5.0")
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -47,23 +49,27 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 
     //okhttp3
-    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.7"
+    implementation "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
 
     // apollo
-    implementation 'com.apollographql.apollo3:apollo-runtime:3.5.0'
+    implementation "com.apollographql.apollo3:apollo-runtime:$apollo_version"
 
     //coroutine
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.1'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
     //paging
-    implementation "androidx.paging:paging-runtime:3.1.0"
+    implementation "androidx.paging:paging-runtime:$pagging_version"
 
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.13.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
+
+    //dagger hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
 
 //Configure the Apollo plugin to specify the package in which the Kotlin files will be generated.
