@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.data.Resource
 import com.bakharaalief.graphqlapp.databinding.ActivityMediaDetailBinding
+import com.bakharaalief.graphqlapp.domain.model.MediaById
 import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
+import com.bumptech.glide.Glide
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class MediaDetailActivity : AppCompatActivity() {
@@ -15,7 +19,8 @@ class MediaDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMediaDetailBinding
     private lateinit var characterDetailViewModel: MediaDetailViewModel
 
-    private val id: Int by lazy { intent.getIntExtra(CHARACTER_ID, 0) }
+    private val id: Int by lazy { intent.getIntExtra(MEDIA_ID, 0) }
+    private val name: String by lazy { intent.getStringExtra(MEDIA_TITLE) ?: "" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +35,7 @@ class MediaDetailActivity : AppCompatActivity() {
     }
 
     private fun setUpActionBar() {
-        supportActionBar?.title = id.toString()
+        supportActionBar?.title = name
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -64,10 +69,14 @@ class MediaDetailActivity : AppCompatActivity() {
             when (response) {
                 is Resource.Loading -> {
                     binding.loadingIndicator.visibility = View.VISIBLE
+                    binding.bannerImage.visibility = View.GONE
+                    binding.mediaDetailInfo.visibility = View.GONE
                 }
                 is Resource.Success -> {
                     binding.loadingIndicator.visibility = View.GONE
-                    binding.characterDetailInfo.visibility = View.VISIBLE
+                    binding.bannerImage.visibility = View.VISIBLE
+                    binding.mediaDetailInfo.visibility = View.VISIBLE
+                    setInformation(response.data)
                 }
                 is Resource.Error -> {
                     binding.loadingIndicator.visibility = View.GONE
@@ -76,7 +85,21 @@ class MediaDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun setInformation(mediaById: MediaById) {
+        Glide
+            .with(this)
+            .load(mediaById.bannerImage)
+            .centerCrop()
+            .placeholder(R.drawable.ic_launcher_background)
+            .into(binding.bannerImage)
+
+        binding.mediaDetailTitle.text = mediaById.englishTitle
+        binding.mediaDetailDesc.text =
+            HtmlCompat.fromHtml(mediaById.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
+    }
+
     companion object {
-        const val CHARACTER_ID = "CHARACTER_ID"
+        const val MEDIA_ID = "CHARACTER_ID"
+        const val MEDIA_TITLE = "CHARACTER_TITLE"
     }
 }
