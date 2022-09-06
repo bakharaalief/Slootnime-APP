@@ -17,9 +17,7 @@ class CharacterDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCharacterDetailBinding
     private lateinit var characterDetailViewModel: CharacterDetailViewModel
 
-    private val id: String by lazy { intent.getStringExtra(CHARACTER_ID) ?: "" }
-    private val name: String by lazy { intent.getStringExtra(CHARACTER_NAME) ?: "" }
-    private val image: String by lazy { intent.getStringExtra(CHARACTER_IMAGE) ?: "" }
+    private val id: Int by lazy { intent.getIntExtra(CHARACTER_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +28,11 @@ class CharacterDetailActivity : AppCompatActivity() {
         setUpActionBar()
         setUpAnimation()
         setUpViewModel()
-        setPhoto()
         getData()
     }
 
     private fun setUpActionBar() {
-        supportActionBar?.title = name
+        supportActionBar?.title = id.toString()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -64,15 +61,6 @@ class CharacterDetailActivity : AppCompatActivity() {
             ViewModelProvider(this, factory)[CharacterDetailViewModel::class.java]
     }
 
-    private fun setPhoto() {
-        Glide
-            .with(this)
-            .load(image)
-            .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
-            .into(binding.characterDetailImage)
-    }
-
     private fun getData() {
         characterDetailViewModel.getCharactersByIds(id).observe(this) { response ->
             when (response) {
@@ -82,9 +70,6 @@ class CharacterDetailActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     binding.loadingIndicator.visibility = View.GONE
                     binding.characterDetailInfo.visibility = View.VISIBLE
-                    binding.characterDetailName.text = response.data.name
-                    binding.characterDetailGender.text = response.data.gender
-                    binding.characterDetailSpecies.text = response.data.species
                 }
                 is Resource.Error -> {
                     binding.loadingIndicator.visibility = View.GONE
@@ -95,7 +80,5 @@ class CharacterDetailActivity : AppCompatActivity() {
 
     companion object {
         const val CHARACTER_ID = "CHARACTER_ID"
-        const val CHARACTER_NAME = "CHARACTER_NAME"
-        const val CHARACTER_IMAGE = "CHARACTER_IMAGE"
     }
 }

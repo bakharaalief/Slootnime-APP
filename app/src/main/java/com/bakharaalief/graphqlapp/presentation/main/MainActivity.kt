@@ -32,12 +32,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRv() {
-        adapter = CharactersAdapter { id, name, image ->
+        adapter = CharactersAdapter { id ->
             val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
             val detailIntent = Intent(this, CharacterDetailActivity::class.java).apply {
                 putExtra(CharacterDetailActivity.CHARACTER_ID, id)
-                putExtra(CharacterDetailActivity.CHARACTER_NAME, name)
-                putExtra(CharacterDetailActivity.CHARACTER_IMAGE, image)
             }
             startActivity(detailIntent, bundle)
         }

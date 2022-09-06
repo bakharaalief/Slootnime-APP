@@ -5,5 +5,5 @@ import com.bakharaalief.graphqlapp.domain.usecase.CharacterUseCase
 
 class CharacterDetailViewModel(private val characterUseCase: CharacterUseCase) : ViewModel() {
 
-    fun getCharactersByIds(id: String) = characterUseCase.getCharactersByIds(id)
+    fun getCharactersByIds(id: Int) = characterUseCase.getCharactersByIds(id)
 }
