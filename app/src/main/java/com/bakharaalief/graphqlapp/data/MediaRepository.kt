@@ -9,26 +9,26 @@ import androidx.paging.liveData
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.api.Optional
 import com.bakharaalief.app.MediaByIdQuery
-import com.bakharaalief.graphqlapp.data.network.CharactersPagingSource
+import com.bakharaalief.graphqlapp.data.network.ListMediaPagingSource
 import com.bakharaalief.graphqlapp.domain.model.Media
 import com.bakharaalief.graphqlapp.domain.model.MediaById
-import com.bakharaalief.graphqlapp.domain.repository.ICharacterRepository
+import com.bakharaalief.graphqlapp.domain.repository.IMediaRepository
 import com.bakharaalief.graphqlapp.util.DataMapper.toMediaByIdModel
 
-class CharacterRepository(private val client: ApolloClient) : ICharacterRepository {
+class MediaRepository(private val client: ApolloClient) : IMediaRepository {
 
-    override fun getCharacters(): LiveData<PagingData<Media>> {
+    override fun getListMedia(): LiveData<PagingData<Media>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10
             ),
             pagingSourceFactory = {
-                CharactersPagingSource(client)
+                ListMediaPagingSource(client)
             }
         ).liveData
     }
 
-    override fun getCharactersByIds(id: Int): LiveData<Resource<MediaById>> = liveData {
+    override fun getMediaById(id: Int): LiveData<Resource<MediaById>> = liveData {
         emit(Resource.Loading)
 
         try {
@@ -43,11 +43,11 @@ class CharacterRepository(private val client: ApolloClient) : ICharacterReposito
 
     companion object {
         @Volatile
-        private var instance: CharacterRepository? = null
+        private var instance: MediaRepository? = null
 
-        fun getInstance(client: ApolloClient): CharacterRepository =
+        fun getInstance(client: ApolloClient): MediaRepository =
             instance ?: synchronized(this) {
-                instance ?: CharacterRepository(client)
+                instance ?: MediaRepository(client)
             }.also { instance = it }
     }
 }

@@ -8,7 +8,7 @@ import com.bakharaalief.app.ListMediaQuery
 import com.bakharaalief.graphqlapp.domain.model.Media
 import com.bakharaalief.graphqlapp.util.DataMapper.toMediaModel
 
-class CharactersPagingSource(private val client: ApolloClient) :
+class ListMediaPagingSource(private val client: ApolloClient) :
     PagingSource<Int, Media>() {
 
     private val initialPageIndex: Int by lazy { 1 }
