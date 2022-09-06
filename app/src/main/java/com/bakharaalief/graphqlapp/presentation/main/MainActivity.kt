@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
 import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
-import com.bakharaalief.graphqlapp.presentation.characterDetail.CharacterDetailActivity
+import com.bakharaalief.graphqlapp.presentation.characterDetail.MediaDetailActivity
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
 class MainActivity : AppCompatActivity() {
@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
     private fun setUpRv() {
         adapter = CharactersAdapter { id ->
             val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-            val detailIntent = Intent(this, CharacterDetailActivity::class.java).apply {
-                putExtra(CharacterDetailActivity.CHARACTER_ID, id)
+            val detailIntent = Intent(this, MediaDetailActivity::class.java).apply {
+                putExtra(MediaDetailActivity.CHARACTER_ID, id)
             }
             startActivity(detailIntent, bundle)
         }

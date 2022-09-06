@@ -6,9 +6,9 @@ import com.bakharaalief.graphqlapp.data.Resource
 import com.bakharaalief.graphqlapp.domain.model.Media
 import com.bakharaalief.graphqlapp.domain.model.MediaById
 
-interface ICharacterRepository {
+interface IMediaRepository {
 
-    fun getCharacters(): LiveData<PagingData<Media>>
+    fun getListMedia(): LiveData<PagingData<Media>>
 
-    fun getCharactersByIds(id: Int): LiveData<Resource<MediaById>>
+    fun getMediaById(id: Int): LiveData<Resource<MediaById>>
 }

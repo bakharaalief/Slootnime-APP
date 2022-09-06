@@ -5,24 +5,22 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.data.Resource
-import com.bakharaalief.graphqlapp.databinding.ActivityCharacterDetailBinding
+import com.bakharaalief.graphqlapp.databinding.ActivityMediaDetailBinding
 import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
-import com.bumptech.glide.Glide
 import com.google.android.material.transition.platform.MaterialSharedAxis
 
-class CharacterDetailActivity : AppCompatActivity() {
+class MediaDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCharacterDetailBinding
-    private lateinit var characterDetailViewModel: CharacterDetailViewModel
+    private lateinit var binding: ActivityMediaDetailBinding
+    private lateinit var characterDetailViewModel: MediaDetailViewModel
 
     private val id: Int by lazy { intent.getIntExtra(CHARACTER_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityCharacterDetailBinding.inflate(layoutInflater)
+        binding = ActivityMediaDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUpActionBar()
@@ -58,7 +56,7 @@ class CharacterDetailActivity : AppCompatActivity() {
     private fun setUpViewModel() {
         val factory = ViewModelFactory.getInstance()
         characterDetailViewModel =
-            ViewModelProvider(this, factory)[CharacterDetailViewModel::class.java]
+            ViewModelProvider(this, factory)[MediaDetailViewModel::class.java]
     }
 
     private fun getData() {
