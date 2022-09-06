@@ -10,10 +10,11 @@ import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.data.Resource
 import com.bakharaalief.graphqlapp.databinding.ActivityMediaDetailBinding
 import com.bakharaalief.graphqlapp.domain.model.MediaById
-import com.bakharaalief.graphqlapp.presentation.ViewModelFactory
 import com.bumptech.glide.Glide
 import com.google.android.material.transition.platform.MaterialSharedAxis
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MediaDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMediaDetailBinding
@@ -59,9 +60,7 @@ class MediaDetailActivity : AppCompatActivity() {
     }
 
     private fun setUpViewModel() {
-        val factory = ViewModelFactory.getInstance()
-        characterDetailViewModel =
-            ViewModelProvider(this, factory)[MediaDetailViewModel::class.java]
+        characterDetailViewModel = ViewModelProvider(this)[MediaDetailViewModel::class.java]
     }
 
     private fun getData() {
