@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Graphql App</string>
     <string name="retry">Retry</string>
+    <string name="slootnime">Slootnime</string>
 </resources>
