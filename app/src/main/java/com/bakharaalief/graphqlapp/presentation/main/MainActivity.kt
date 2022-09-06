@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var adapter: CharactersAdapter
+    private lateinit var adapter: ListMediaAdapter
 
     private val spanCount: Int by lazy { 2 }
 
@@ -32,10 +32,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRv() {
-        adapter = CharactersAdapter { id ->
+        adapter = ListMediaAdapter { id, title ->
             val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
             val detailIntent = Intent(this, MediaDetailActivity::class.java).apply {
-                putExtra(MediaDetailActivity.CHARACTER_ID, id)
+                putExtra(MediaDetailActivity.MEDIA_ID, id)
+                putExtra(MediaDetailActivity.MEDIA_TITLE, title)
             }
             startActivity(detailIntent, bundle)
         }
