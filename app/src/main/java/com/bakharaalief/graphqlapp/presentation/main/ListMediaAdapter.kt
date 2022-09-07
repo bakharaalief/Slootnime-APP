@@ -25,7 +25,7 @@ class ListMediaAdapter(private val onItemClick: (id: Int, title: String) -> Unit
                 .with(itemView.context)
                 .load(media.coverImage)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.color.brown)
                 .into(itemMediaBinding.mediaItemCover)
         }
     }

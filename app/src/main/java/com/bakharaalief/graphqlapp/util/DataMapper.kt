@@ -16,7 +16,7 @@ object DataMapper {
                 it.title?.english ?: "not found",
                 it.title?.native ?: "not found",
                 it.title?.romaji ?: "not found",
-                it.coverImage?.large ?: "not found",
+                it.coverImage?.extraLarge ?: "not found",
                 it.averageScore ?: 0
             )
         }

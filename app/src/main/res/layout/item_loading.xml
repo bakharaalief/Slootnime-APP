@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
-        android:textColor="?android:textColorPrimary"
+        android:textColor="@color/black"
         tools:text="Timeout" />
 
     <ProgressBar
@@ -20,7 +20,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/brown" />
 
     <Button
         android:id="@+id/retry_button"
