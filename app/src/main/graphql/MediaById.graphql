@@ -8,10 +8,22 @@ query MediaById($mediaId: Int) {
             }
             staff {
                 nodes {
+                    id
                     name {
                         full
                     }
                     image {
+                        large
+                    }
+                }
+            }
+            characters{
+                nodes{
+                    id
+                    name{
+                        full
+                    }
+                    image{
                         large
                     }
                 }

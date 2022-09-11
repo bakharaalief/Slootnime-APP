@@ -10,7 +10,7 @@ import com.bakharaalief.graphqlapp.domain.model.Media
 import com.bakharaalief.graphqlapp.domain.model.MediaDiffUtil
 import com.bumptech.glide.Glide
 
-class ListMediaAdapter(private val onItemClick: (id: Int, title: String) -> Unit) :
+class ListMediaAdapter(private val onItemClick: (media: Media) -> Unit) :
     PagingDataAdapter<Media, ListMediaAdapter.MyViewHolder>(MediaDiffUtil) {
 
     class MyViewHolder(private val itemMediaBinding: ItemMediaBinding) :
@@ -37,7 +37,7 @@ class ListMediaAdapter(private val onItemClick: (id: Int, title: String) -> Unit
         }
 
         holder.mediaItemCard.setOnClickListener {
-            onItemClick(data?.id ?: 0, data?.englishTitle ?: "not found")
+            onItemClick(data ?: Media(0, "", "", "", "", 0, emptyList(), 0))
         }
     }
 

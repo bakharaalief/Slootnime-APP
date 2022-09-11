@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GraphqlApp">
         <activity
-            android:name=".presentation.characterDetail.MediaDetailActivity"
+            android:name=".presentation.mediaDetail.MediaDetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"

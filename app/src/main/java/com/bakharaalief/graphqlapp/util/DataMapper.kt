@@ -17,7 +17,9 @@ object DataMapper {
                 it.title?.native ?: "not found",
                 it.title?.romaji ?: "not found",
                 it.coverImage?.extraLarge ?: "not found",
-                it.averageScore ?: 0
+                it.episodes ?: 0,
+                it.genres?.filterNotNull() ?: emptyList(),
+                it.seasonYear ?: 0
             )
         }
     }
@@ -43,6 +45,7 @@ object DataMapper {
     private fun List<MediaByIdQuery.Node>.toStaffModel(): List<Staff> {
         return this.map {
             Staff(
+                it.id,
                 it.name?.full ?: "not found",
                 it.image?.large ?: "not found"
             )

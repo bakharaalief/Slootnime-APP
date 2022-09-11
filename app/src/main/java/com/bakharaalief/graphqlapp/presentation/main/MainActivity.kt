@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bakharaalief.graphqlapp.databinding.ActivityMainBinding
-import com.bakharaalief.graphqlapp.presentation.characterDetail.MediaDetailActivity
+import com.bakharaalief.graphqlapp.presentation.mediaDetail.MediaDetailActivity
 import com.google.android.material.transition.platform.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,14 +30,22 @@ class MainActivity : AppCompatActivity() {
         setUpAnimation()
         setUpRv()
         getData()
+
+//        binding.toDetail.setOnClickListener {
+//            val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+//            val detailIntent = Intent(this, MediaDetailActivity::class.java).apply {
+//                putExtra(MediaDetailActivity.MEDIA_ID, 1)
+//                putExtra(MediaDetailActivity.MEDIA_TITLE, "uhuhy")
+//            }
+//            startActivity(detailIntent, bundle)
+//        }
     }
 
     private fun setUpRv() {
-        adapter = ListMediaAdapter { id, title ->
+        adapter = ListMediaAdapter { media ->
             val bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
             val detailIntent = Intent(this, MediaDetailActivity::class.java).apply {
-                putExtra(MediaDetailActivity.MEDIA_ID, id)
-                putExtra(MediaDetailActivity.MEDIA_TITLE, title)
+                putExtra(MediaDetailActivity.MEDIA_EXTRA, media)
             }
             startActivity(detailIntent, bundle)
         }

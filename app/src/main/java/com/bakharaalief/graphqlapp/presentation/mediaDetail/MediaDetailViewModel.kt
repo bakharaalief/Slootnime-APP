@@ -1,4 +1,4 @@
-package com.bakharaalief.graphqlapp.presentation.characterDetail
+package com.bakharaalief.graphqlapp.presentation.mediaDetail
 
 import androidx.lifecycle.ViewModel
 import com.bakharaalief.graphqlapp.domain.usecase.MediaUseCase

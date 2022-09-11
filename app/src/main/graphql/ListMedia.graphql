@@ -14,7 +14,9 @@ query ListMedia($page: Int) {
             coverImage {
                 extraLarge
             }
-            averageScore
+            episodes
+            genres
+            seasonYear
         }
     }
 }
