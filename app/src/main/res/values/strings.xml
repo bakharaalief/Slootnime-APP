@@ -2,4 +2,6 @@
     <string name="app_name">Graphql App</string>
     <string name="retry">Retry</string>
     <string name="slootnime">Slootnime</string>
+    <string name="characters">Characters</string>
+    <string name="staff">Staff</string>
 </resources>

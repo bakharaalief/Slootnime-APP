@@ -15,8 +15,3 @@ data class Date(
     val month: Int,
     val day: Int
 )
-
-data class Staff(
-    val name: String,
-    val staffImage: String
-)

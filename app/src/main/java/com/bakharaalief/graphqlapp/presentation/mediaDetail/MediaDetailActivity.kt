@@ -1,4 +1,4 @@
-package com.bakharaalief.graphqlapp.presentation.characterDetail
+package com.bakharaalief.graphqlapp.presentation.mediaDetail
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,9 +6,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bakharaalief.graphqlapp.R
 import com.bakharaalief.graphqlapp.data.Resource
 import com.bakharaalief.graphqlapp.databinding.ActivityMediaDetailBinding
+import com.bakharaalief.graphqlapp.domain.model.Media
 import com.bakharaalief.graphqlapp.domain.model.MediaById
 import com.bumptech.glide.Glide
 import com.google.android.material.transition.platform.MaterialSharedAxis
@@ -19,9 +21,20 @@ class MediaDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMediaDetailBinding
     private lateinit var characterDetailViewModel: MediaDetailViewModel
+    private lateinit var adapter: StaffAdapter
 
-    private val id: Int by lazy { intent.getIntExtra(MEDIA_ID, 0) }
-    private val name: String by lazy { intent.getStringExtra(MEDIA_TITLE) ?: "" }
+    private val media: Media by lazy {
+        intent.getParcelableExtra(MEDIA_EXTRA) ?: Media(
+            0,
+            "",
+            "",
+            "",
+            "",
+            0,
+            emptyList(),
+            0
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +43,29 @@ class MediaDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpActionBar()
+        setUpInfoInToolbar()
+        setUpRv()
         setUpAnimation()
         setUpViewModel()
         getData()
     }
 
     private fun setUpActionBar() {
-        supportActionBar?.title = name
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.title = media.englishTitle
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    private fun setUpInfoInToolbar() {
+        binding.mediaDetailEpisode.text = media.episodes.toString().plus(" episodes")
+        binding.mediaDetailReleased.text = media.seasonYear.toString()
+    }
+
+    private fun setUpRv() {
+        adapter = StaffAdapter()
+        binding.staffRv.adapter = adapter
+        binding.staffRv.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -64,16 +92,14 @@ class MediaDetailActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        characterDetailViewModel.getCharactersByIds(id).observe(this) { response ->
+        characterDetailViewModel.getCharactersByIds(media.id).observe(this) { response ->
             when (response) {
                 is Resource.Loading -> {
                     binding.loadingIndicator.visibility = View.VISIBLE
-                    binding.bannerImage.visibility = View.GONE
                     binding.mediaDetailInfo.visibility = View.GONE
                 }
                 is Resource.Success -> {
                     binding.loadingIndicator.visibility = View.GONE
-                    binding.bannerImage.visibility = View.VISIBLE
                     binding.mediaDetailInfo.visibility = View.VISIBLE
                     setInformation(response.data)
                 }
@@ -95,10 +121,11 @@ class MediaDetailActivity : AppCompatActivity() {
         binding.mediaDetailTitle.text = mediaById.englishTitle
         binding.mediaDetailDesc.text =
             HtmlCompat.fromHtml(mediaById.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
+
+        adapter.submitList(mediaById.staff)
     }
 
     companion object {
-        const val MEDIA_ID = "CHARACTER_ID"
-        const val MEDIA_TITLE = "CHARACTER_TITLE"
+        const val MEDIA_EXTRA = "CHARACTER_ID"
     }
 }
