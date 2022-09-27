@@ -21,7 +21,8 @@ class MediaDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMediaDetailBinding
     private lateinit var characterDetailViewModel: MediaDetailViewModel
-    private lateinit var adapter: StaffAdapter
+    private lateinit var staffAdapter: StaffAdapter
+    private lateinit var charactersAdapter: CharactersAdapter
 
     private val media: Media by lazy {
         intent.getParcelableExtra(MEDIA_EXTRA) ?: Media(
@@ -62,9 +63,14 @@ class MediaDetailActivity : AppCompatActivity() {
     }
 
     private fun setUpRv() {
-        adapter = StaffAdapter()
-        binding.staffRv.adapter = adapter
+        staffAdapter = StaffAdapter()
+        binding.staffRv.adapter = staffAdapter
         binding.staffRv.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        charactersAdapter = CharactersAdapter()
+        binding.charactersRv.adapter = charactersAdapter
+        binding.charactersRv.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
@@ -115,14 +121,15 @@ class MediaDetailActivity : AppCompatActivity() {
             .with(this)
             .load(mediaById.bannerImage)
             .centerCrop()
-            .placeholder(R.drawable.ic_launcher_background)
+            .placeholder(R.color.brown)
             .into(binding.bannerImage)
 
         binding.mediaDetailTitle.text = mediaById.englishTitle
         binding.mediaDetailDesc.text =
             HtmlCompat.fromHtml(mediaById.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
 
-        adapter.submitList(mediaById.staff)
+        staffAdapter.submitList(mediaById.staff)
+        charactersAdapter.submitList(mediaById.characters)
     }
 
     companion object {

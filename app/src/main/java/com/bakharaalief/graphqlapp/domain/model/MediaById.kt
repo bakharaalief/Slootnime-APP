@@ -7,7 +7,8 @@ data class MediaById(
     val englishNative: String,
     val englishRomaji: String,
     val description: String,
-    val staff: List<Staff>
+    val staff: List<Staff>,
+    val characters: List<Character>
 )
 
 data class Date(
