@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Graphql App"
+rootProject.name = "Slootnime App"
 include ':app'
