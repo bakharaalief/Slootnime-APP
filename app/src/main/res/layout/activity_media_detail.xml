@@ -33,7 +33,7 @@
                     android:fitsSystemWindows="true"
                     android:foreground="@drawable/gradien_color"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_launcher_background"
+                    android:src="@color/brown"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -59,10 +59,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="2h 35m"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="2h 35m" />
 
                 <TextView
                     android:id="@+id/dot_icon"
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:gravity="center"
-                    android:text="•"
+                    android:text="@string/titik"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/banner_image"
                     app:layout_constraintStart_toEndOf="@id/media_detail_episode" />
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:gravity="center"
-                    android:text="Action, Advanture, Drama"
+                    android:text="@string/action_advanture_drama"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/banner_image"
                     app:layout_constraintStart_toEndOf="@id/dot_icon" />
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:gravity="center"
-                    android:text="•"
+                    android:text="@string/titik"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/banner_image"
                     app:layout_constraintStart_toEndOf="@id/media_detail_category" />
@@ -102,10 +102,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="2022"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/banner_image"
-                    app:layout_constraintStart_toEndOf="@id/dot_icon_2" />
+                    app:layout_constraintStart_toEndOf="@id/dot_icon_2"
+                    tools:text="2022" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,6 +160,24 @@
                     tools:text="DUNE" />
 
                 <TextView
+                    android:id="@+id/characters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/characters"
+                    android:textColor="@color/dark_brown"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/characters_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal" />
+
+                <TextView
                     android:id="@+id/staff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,7 +202,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp"
+                android:indeterminateTint="@color/brown" />
 
         </LinearLayout>
 
