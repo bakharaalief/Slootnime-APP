@@ -13,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GraphqlApp">
         <activity
-            android:name="com.bakharaalief.slootnimeapp.presentation.mediaDetail.MediaDetailActivity"
+            android:name="com.bakharaalief.slootnimeapp.mediaDetail.MediaDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.bakharaalief.slootnimeapp.presentation.main.MainActivity"
+            android:name="com.bakharaalief.slootnimeapp.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name="com.bakharaalief.slootnimeapp.presentation.splash.SplashActivity"
+            android:name="com.bakharaalief.slootnimeapp.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
